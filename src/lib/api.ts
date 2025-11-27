@@ -161,6 +161,10 @@ export async function fetchSignals(params?: {
 
   const queryStr = query.toString();
   const result = await fetchAPI(`/signals${queryStr ? `?${queryStr}` : ''}`);
+  // API returns { signals: [...], count: N }
+  if (result?.signals && Array.isArray(result.signals)) {
+    return result.signals;
+  }
   return Array.isArray(result) ? result : [];
 }
 
@@ -191,6 +195,10 @@ export async function fetchOpportunities(params?: {
 
   const queryStr = query.toString();
   const result = await fetchAPI(`/opportunities${queryStr ? `?${queryStr}` : ''}`);
+  // API returns { opportunities: [...], count: N }
+  if (result?.opportunities && Array.isArray(result.opportunities)) {
+    return result.opportunities;
+  }
   return Array.isArray(result) ? result : [];
 }
 
@@ -221,6 +229,10 @@ export async function fetchPatterns(params?: {
 
   const queryStr = query.toString();
   const result = await fetchAPI(`/patterns${queryStr ? `?${queryStr}` : ''}`);
+  // API returns { patterns: [...], count: N }
+  if (result?.patterns && Array.isArray(result.patterns)) {
+    return result.patterns;
+  }
   return Array.isArray(result) ? result : [];
 }
 
