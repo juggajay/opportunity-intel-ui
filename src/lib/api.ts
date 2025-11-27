@@ -53,9 +53,11 @@ export interface Pattern {
   description?: string;
   hypothesis?: string;
   confidence_score: number;
+  confidence?: number;
   opportunity_score: number;
   primary_thesis_alignment?: string;
   thesis_scores: Record<string, number>;
+  related_theses?: string[];
   status: string;
   user_notes?: string;
   detected_at: string;
@@ -65,6 +67,7 @@ export interface Pattern {
 export interface Opportunity {
   id: string;
   title: string;
+  description?: string;
   summary?: string;
   detailed_analysis?: string;
   pattern_ids: string[];
@@ -84,7 +87,11 @@ export interface Opportunity {
   potential_moats: string[];
   risks: string[];
   status: string;
+  notes?: string;
   user_notes?: string;
+  market_size?: string;
+  competition_level?: string;
+  related_signals?: any[];
   created_at: string;
   updated_at: string;
 }
@@ -105,6 +112,15 @@ export interface DigestContent {
   velocity_spikes: any[];
   key_insight: string;
   recommended_actions: string[];
+  content?: string;
+  stats?: {
+    signals?: number;
+    patterns?: number;
+    opportunities?: number;
+    top_thesis?: string;
+  };
+  top_opportunities?: any[];
+  key_patterns?: any[];
 }
 
 // API Functions
@@ -240,6 +256,26 @@ export async function fetchWeeklyDigest(): Promise<DigestContent> {
 
 export async function fetchMonthlyDigest(): Promise<DigestContent> {
   return fetchAPI('/digest/monthly');
+}
+
+export async function fetchDigest(period: string): Promise<DigestContent | null> {
+  try {
+    return await fetchAPI(`/digest/${period}`);
+  } catch {
+    return null;
+  }
+}
+
+export async function generateDigest(period: string): Promise<DigestContent> {
+  return fetchAPI(`/digest/${period}/generate`, { method: 'POST' });
+}
+
+// Update opportunity notes
+export async function updateOpportunityNotes(id: string, notes: string): Promise<Opportunity> {
+  return fetchAPI(`/opportunities/${id}`, {
+    method: 'PATCH',
+    body: JSON.stringify({ user_notes: notes }),
+  });
 }
 
 // Pipeline Actions
