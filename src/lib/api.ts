@@ -20,6 +20,9 @@ export interface ProcessedSignal {
   signal_subtype?: string;
   title?: string;
   summary?: string;
+  source_url?: string;
+  relevance_score?: number;
+  thesis_tags?: string[];
   entities: {
     companies: string[];
     technologies: string[];
