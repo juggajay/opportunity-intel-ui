@@ -14,16 +14,22 @@ export function formatDate(date: string | Date): string {
   })
 }
 
-export function formatTimeAgo(date: string | Date): string {
-  const d = new Date(date)
-  const now = new Date()
-  const seconds = Math.floor((now.getTime() - d.getTime()) / 1000)
+export function formatTimeAgo(date: string | Date | undefined | null): string {
+  if (!date) return 'Unknown'
+  try {
+    const d = new Date(date)
+    if (isNaN(d.getTime())) return 'Unknown'
+    const now = new Date()
+    const seconds = Math.floor((now.getTime() - d.getTime()) / 1000)
 
-  if (seconds < 60) return 'just now'
-  if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`
-  if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`
-  if (seconds < 604800) return `${Math.floor(seconds / 86400)}d ago`
-  return formatDate(date)
+    if (seconds < 60) return 'just now'
+    if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`
+    if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`
+    if (seconds < 604800) return `${Math.floor(seconds / 86400)}d ago`
+    return formatDate(date)
+  } catch {
+    return 'Unknown'
+  }
 }
 
 export function getStatusColor(status: string): string {

@@ -160,7 +160,8 @@ export async function fetchSignals(params?: {
   if (params?.days) query.set('days', params.days.toString());
 
   const queryStr = query.toString();
-  return fetchAPI(`/signals${queryStr ? `?${queryStr}` : ''}`);
+  const result = await fetchAPI(`/signals${queryStr ? `?${queryStr}` : ''}`);
+  return Array.isArray(result) ? result : [];
 }
 
 export async function fetchRawSignals(params?: {
@@ -189,7 +190,8 @@ export async function fetchOpportunities(params?: {
   if (params?.timing_stage) query.set('timing_stage', params.timing_stage);
 
   const queryStr = query.toString();
-  return fetchAPI(`/opportunities${queryStr ? `?${queryStr}` : ''}`);
+  const result = await fetchAPI(`/opportunities${queryStr ? `?${queryStr}` : ''}`);
+  return Array.isArray(result) ? result : [];
 }
 
 export async function fetchOpportunity(id: string): Promise<Opportunity> {
@@ -218,7 +220,8 @@ export async function fetchPatterns(params?: {
   if (params?.min_score) query.set('min_score', params.min_score.toString());
 
   const queryStr = query.toString();
-  return fetchAPI(`/patterns${queryStr ? `?${queryStr}` : ''}`);
+  const result = await fetchAPI(`/patterns${queryStr ? `?${queryStr}` : ''}`);
+  return Array.isArray(result) ? result : [];
 }
 
 export async function updatePattern(id: string, data: {
