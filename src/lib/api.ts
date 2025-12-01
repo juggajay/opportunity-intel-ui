@@ -110,20 +110,16 @@ export interface DigestContent {
   signals_processed: number;
   patterns_detected: number;
   opportunities_identified: number;
-  top_patterns: Pattern[];
-  new_opportunities: Opportunity[];
+  top_patterns: any[];
+  new_opportunities: any[];
   velocity_spikes: any[];
   key_insight: string;
   recommended_actions: string[];
-  content?: string;
-  stats?: {
-    signals?: number;
-    patterns?: number;
-    opportunities?: number;
-    top_thesis?: string;
-  };
-  top_opportunities?: any[];
-  key_patterns?: any[];
+  // v2.0 SaaS Finder fields
+  top_build_ready_ideas?: any[];
+  emerging_trends?: any[];
+  pass_list?: any[];
+  this_week_action?: string;
 }
 
 // API Functions
